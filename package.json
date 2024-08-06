@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "solidity-parser-antlr": "^0.4.11"
+  }
+}
