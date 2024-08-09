@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_app/bottomnavigationbar.dart';
 import 'package:my_app/provider/authprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:my_app/login_screen.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
+                fontFamily: 'Poppins'
               ),
               home: LoginScreen(),
             ),
