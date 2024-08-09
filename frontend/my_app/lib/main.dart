@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: const CupertinoThemeData(
           primaryColor: CupertinoColors.systemPurple,
+          
         ),
         home:  LoginScreen(),
       );
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          fontFamily: 'Poppins',
         ),
         home:  HomePage(),
       );
