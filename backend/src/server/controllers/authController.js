@@ -1,9 +1,10 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import asyncHandler from "express-async-handler"
 import * as tronscan from '../services/tronscan.js';
 
-export const register = async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
   try {
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
@@ -14,7 +15,7 @@ export const register = async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const { address, privateKey } = await tronscan.createAccount();
-    const user = new User({ name, email, password: hashedPassword, address, privateKey });
+    const user = new User({ name, email, password: hashedPassword, address, privateKey,transactions:[]});
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
@@ -22,9 +23,9 @@ export const register = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});
 
-export const login = async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -42,4 +43,4 @@ export const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+});

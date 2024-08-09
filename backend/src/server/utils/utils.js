@@ -8,8 +8,8 @@ const tronWeb = new TronWeb({
   privateKey: process.env.TRON_PRIVATE_KEY
 });
 
-const flashUsdtAddress = '0x123456789abcdef'; // Address of the deployed FlashUSDT contract
-const flashUsdtABI = [ /* ABI of the FlashUSDT contract */ ];
+const flashUsdtAddress = process.env.FLASHUSDT_ADDRESS; // Address of the deployed FlashUSDT contract
+const flashUsdtABI = [ process.env.FLASHUSDT_ABI ];
 
 const FlashUSDT = tronWeb.contract(flashUsdtABI, flashUsdtAddress);
 
