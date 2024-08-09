@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_app/provider/authprovider.dart';
+import 'package:provider/provider.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -9,24 +12,20 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _password = '';
 
-  void _login() {
+  void _login(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Handle login logic here
-      print('Email: $_email');
-      print('Password: $_password');
+      Provider.of<authprovider>(context, listen: false).login();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Platform.isIOS ? _buildCupertinoLoginScreen() : _buildMaterialLoginScreen();
+    return Platform.isIOS ? _buildCupertinoLoginScreen(context) : _buildMaterialLoginScreen(context);
   }
 
-  Widget _buildCupertinoLoginScreen() {
+  Widget _buildCupertinoLoginScreen(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: Text('Login'),
@@ -48,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  _email = value ?? '';
+                  Provider.of<authprovider>(context, listen: false).updateEmail(value!);
                 },
               ),
               SizedBox(height: 16),
@@ -62,13 +61,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  _password = value ?? '';
+                  Provider.of<authprovider>(context, listen: false).updatePassword(value!);
                 },
               ),
               SizedBox(height: 32),
-              CupertinoButton.filled(
-                onPressed: _login,
-                child: Text('Login'),
+              Consumer<authprovider>(
+                builder: (context, authprovider, child) {
+                  return CupertinoButton.filled(
+                    onPressed: authprovider.isLoading ? null : () => _login(context),
+                    child: authprovider.isLoading ? CupertinoActivityIndicator() : Text('Login'),
+                  );
+                },
               ),
             ],
           ),
@@ -77,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildMaterialLoginScreen() {
+  Widget _buildMaterialLoginScreen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  _email = value ?? '';
+                  Provider.of<authprovider>(context, listen: false).updateEmail(value!);
                 },
               ),
               SizedBox(height: 16),
@@ -119,13 +122,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   return null;
                 },
                 onSaved: (value) {
-                  _password = value ?? '';
+                  Provider.of<authprovider>(context, listen: false).updatePassword(value!);
                 },
               ),
               SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Login'),
+              Consumer<authprovider>(
+                builder: (context, authprovider, child) {
+                  return ElevatedButton(
+                    onPressed: authprovider.isLoading ? null : () => _login(context),
+                    child: authprovider.isLoading ? CircularProgressIndicator() : Text('Login'),
+                  );
+                },
               ),
             ],
           ),

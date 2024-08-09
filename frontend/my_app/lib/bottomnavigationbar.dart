@@ -161,7 +161,7 @@ class _HomePageState extends State<HomePage> {
               selectedItemColor: Colors.blue,
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Iconsax.home),
+                  icon: Icon(Icons.home),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
