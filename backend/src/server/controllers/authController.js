@@ -14,7 +14,9 @@ export const register = asyncHandler(async (req, res) => {
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const { address, privateKey } = await tronscan.createAccount();
+    // const { address, privateKey } = await tronscan.createAccount();
+    const privateKey="sojgosnhrnaenijnsitjhnfkjnhjftnhtjknhktnh";
+    const address="TRkdjnrkjanekjtnsknh";
     const user = new User({ name, email, password: hashedPassword, address, privateKey,transactions:[]});
     await user.save();
 

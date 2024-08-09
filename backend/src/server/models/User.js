@@ -19,8 +19,7 @@ const transactionSchema = new Schema(
       type: Date,
       default: Date.now, // The time the transaction took place
     },
-  },
-  { _id: false } // Prevents the creation of an automatic _id field for each subdocument
+  }
 );
 
 const userSchema = new Schema(
